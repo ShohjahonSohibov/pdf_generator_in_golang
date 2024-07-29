@@ -90,10 +90,10 @@ func createInvoicePDF(data PDFData) (*gofpdf.Fpdf, error) {
 
 	var (
 		numberOrder  = tr("№:IN-72252")
-		agentName    = tr("ООО «ASIA LUXE TRAVEL» ")
+		agentName    = tr("ООО Test LUXE TRAVEL» ")
 		invoiceTitle = tr("Счёт на оплату")
 		invoiceDate  = tr("от: 27.06.2024 12:13")
-		bankDetails  = tr("Beneficiary’s Name: LLC “ASIA LUXE TRAVEL” • Address: St. Amir Temur 24, Mirabod district, Tashkent city, 100000 Uzbekistan Bank Name: JSCB “UZPROMSTROYBANK” Labzak branch Bank A/C No: 20208840005912830001005(USD) Bank A/C No: 2020884000591283000101(USD) Bank Address: Abdurashid Alayzai, Labzak 10A, Tashkent city, Uzbekistan 100000 Bank Code: 00445 SWIFT Code: UZJSUZ22 CorBank: OTP BANK NEW YORK, US CorBank swift: OTPBUS33 CorBank account number: 361-1429 5295357")
+		bankDetails = tr("Beneficiary’s Name: LLC TEST TRAVEL” • Address: St. Amir Temur 24, Mirabod district, Tashkent city, 100000 Uzbekistan Bank Name: JSCB “UZPROMSTROYBANK” Labzak branch Bank A/C No: 1111111111111111(USD) Bank A/C No: 1111111111111111(USD) Bank Address: Abdurashid Alayzai, Labzak 10A, Tashkent city, Uzbekistan 100000 Bank Code: 1111 SWIFT Code: UZJSUZ11 CorBank: OTP BANK NEW YORK, US CorBank swift: OTPBUS11 CorBank account number: 111-1111 111111")
 		hotelText    = tr(fmt.Sprintf("Отель: #%s", data.OrderNumber))
 		operator     = tr(data.Operator)
 		address      = tr(data.Address)
