@@ -10,6 +10,7 @@ import (
 )
 
 type PDFData struct {
+	ID          int
 	Name        string     `json:"name" binding:"required"`
 	Email       string     `json:"email" binding:"required"`
 	Phone       string     `json:"phone" binding:"required"`
@@ -20,15 +21,18 @@ type PDFData struct {
 	OrderNumber string     `json:"order_number" binding:"required"`
 	Operator    string     `json:"operator" binding:"required"`
 	Tourists    []Tourists `json:"tourists" binding:"required"`
+	Hotels      []Hotels   `json:"hotels"`
 }
 
 type Tourists struct {
 	Name      string `json:"name" binding:"required"`
-	Email     string `json:"email" binding:"required"`
-	Hotel     string `json:"hotel" binding:"required"`
-	CheckIn   string `json:"check_in" binding:"required"`
-	CheckOut  string `json:"check_out" binding:"required"`
 	Birthdate string `json:"birthdate" binding:"required"`
+}
+
+type Hotels struct {
+	Hotel    string `json:"hotel" binding:"required"`
+	CheckIn  string `json:"check_in" binding:"required"`
+	CheckOut string `json:"check_out" binding:"required"`
 }
 
 func createInvoicePDF(data PDFData) (*gofpdf.Fpdf, error) {
@@ -103,19 +107,25 @@ func createInvoicePDF(data PDFData) (*gofpdf.Fpdf, error) {
 	touristDetails := [][]string{}
 	birthdateDetails := [][]string{}
 
-	for _, tourist := range data.Tourists {
+	for i, tourist := range data.Tourists {
+		var hotelInfo Hotels
+		var date string
+		if i < len(data.Hotels) {
+			hotelInfo = data.Hotels[i]
+			date = tr(fmt.Sprintf("%s / %s", hotelInfo.CheckIn, hotelInfo.CheckOut))
+		}
+
 
 		touristDetails = append(touristDetails, []string{
 			tr(tourist.Name),
-			tr(fmt.Sprintf("%s / %s", tourist.CheckIn, tourist.CheckOut)),
-			tr(data.Hotel),
+			date,
+			tr(hotelInfo.Hotel),
 		})
 
 		birthdateDetails = append(birthdateDetails, []string{
 			tr(tourist.Name),
 			tr(tourist.Birthdate),
 		})
-
 	}
 
 	// Header
